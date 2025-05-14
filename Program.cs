@@ -44,7 +44,7 @@ class Program
                 MarcarProdutos();
                 break;
             case 4:
-            ListarComprados();
+                ListarComprados();
                 break;
             case 5:
                 break;
