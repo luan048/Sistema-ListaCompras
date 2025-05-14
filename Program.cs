@@ -51,8 +51,13 @@ class Program
             case 6:
                 break;
             case 7:
+                EncerrarPrograma();
                 break;
             default:
+                Console.Clear();
+                Console.WriteLine("Entrada inválida. Por favor tente novamente!");
+                Thread.Sleep(1200);
+                GerenciadorTarefas();
                 break;
         }
     }
@@ -142,7 +147,7 @@ class Program
                 GerenciadorTarefas();
                 break;
             case 2:
-                // Função de encerrar o programa
+                EncerrarPrograma();
                 break;
             default:
                 Console.WriteLine("Entrada inválida. Você será redirecionado ao Home");
@@ -283,7 +288,7 @@ class Program
                 GerenciadorTarefas();
                 break;
             case 2:
-                //Função de encerrar
+                EncerrarPrograma(); 
                 break;
             default:
                 Console.WriteLine("Entrada inválida. Você será redirecionado ao Home");
@@ -291,5 +296,10 @@ class Program
                 GerenciadorTarefas();
                 break;
         }
+    }
+
+    static void EncerrarPrograma() {
+        Console.Clear();
+        Console.WriteLine("Programa encerrado. Até logo...👋");
     }
 }
