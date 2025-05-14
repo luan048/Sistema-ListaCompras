@@ -2,6 +2,8 @@
 class Program
 {
     static List<Tuple<int, string>> listaPendentes = new List<Tuple<int, string>>();
+    
+    static int numProduto = 1;
     static void Main(string[] args) {
         GerenciadorTarefas();
     }
@@ -32,6 +34,7 @@ class Program
 
         switch (opcao) {
             case 1:
+                AdicionarCompra();
                 break;
             case 2:
                 ListarPendentes();
@@ -47,6 +50,51 @@ class Program
             case 7:
                 break;
             default:
+                break;
+        }
+    }
+
+    static void AdicionarCompra() {
+        Console.Clear();
+        Console.Write($"Informe qual é o {numProduto}º produto da lista de compras: ");
+        string produto = Console.ReadLine();
+        listaPendentes.Add(Tuple.Create(numProduto, produto));
+        numProduto++;
+        Thread.Sleep(1200);
+        Console.Clear();
+
+        Console.WriteLine("Produto adicionado a lista de compras com sucesso!");
+        Thread.Sleep(1000);
+        Console.WriteLine(" ");
+        Console.WriteLine("O que você deseja fazer?");
+        Console.WriteLine("[1] -- Adicionar novo produto a lista");
+        Console.WriteLine("[2] -- Voltar ao Home");
+        string escolha = Console.ReadLine();
+
+        if(!int.TryParse(escolha, out int opcao)) {
+            Console.Clear();
+            Console.WriteLine("Entrada inválida. Você será redirecionado ao Home");
+            Thread.Sleep(1200);
+            GerenciadorTarefas();
+            return;
+        }
+
+        switch (opcao) {
+            case 1:
+                Console.Clear();
+                AdicionarCompra();
+                break;
+            case 2:
+                Console.Clear();
+                Console.WriteLine("Você será redirecionado ao Home");
+                Thread.Sleep(1200);
+                GerenciadorTarefas();
+                break;
+            default:
+                Console.Clear();
+                Console.WriteLine("Entrada inválida. Você será redirecionado ao Home");
+                Thread.Sleep(1200);
+                GerenciadorTarefas();
                 break;
         }
     }
