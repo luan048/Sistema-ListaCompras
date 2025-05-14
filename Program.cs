@@ -44,6 +44,7 @@ class Program
                 MarcarProdutos();
                 break;
             case 4:
+                ListarComprados();
                 break;
             case 5:
                 break;
@@ -238,5 +239,57 @@ class Program
                 return;
         }
 
+    }
+
+    static void ListarComprados() {
+        Console.Clear();
+        
+        if(listaComprasFeitas.Count == 0) {
+            Console.WriteLine("Lista está vazia. Você ainda não comprou nenhum produto!");
+            Thread.Sleep(2300);
+            Console.Clear();
+
+            Console.WriteLine("Você será redirecionado ao Home. Compre um produto.");
+            Thread.Sleep(2300);
+            GerenciadorTarefas();
+            return;
+        }
+
+        Console.WriteLine("Iniciando listagem de produto já comprados...");
+        Thread.Sleep(1200);
+        Console.WriteLine(" ");
+
+        foreach ((int idProduto, string produto) in listaComprasFeitas)
+        {
+            Console.WriteLine($"{idProduto} {produto}");
+        }
+
+        Thread.Sleep(1200);
+        Console.WriteLine(" ");
+        Console.WriteLine("O que você deseja fazer? ");
+        Console.WriteLine("[1] -- Voltar ao Home");
+        Console.WriteLine("[2] -- Encerrar programa");
+        string entrada = Console.ReadLine();
+
+        if(!int.TryParse(entrada, out int opcao)) {
+            Console.WriteLine("Entrada inválida. Você será redirecionado ao Home");
+            Thread.Sleep(1200);
+            GerenciadorTarefas();
+            return;
+        }
+
+        switch (opcao) {
+            case 1:
+                GerenciadorTarefas();
+                break;
+            case 2:
+                //Função de encerrar 
+                break;
+            default:
+                Console.WriteLine("Entrada inválida. Você será redirecionado ao Home");
+                Thread.Sleep(1200);
+                GerenciadorTarefas();
+                break;
+        }
     }
 }
