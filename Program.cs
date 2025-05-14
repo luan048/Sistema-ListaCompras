@@ -2,7 +2,8 @@
 class Program
 {
     static List<Tuple<int, string>> listaPendentes = new List<Tuple<int, string>>();
-    
+    static List<Tuple<int, string>> listaComprasFeitas = new List<Tuple<int, string>>();
+
     static int numProduto = 1;
     static void Main(string[] args) {
         GerenciadorTarefas();
@@ -40,6 +41,7 @@ class Program
                 ListarPendentes();
                 break;
             case 3:
+                MarcarProdutos();
                 break;
             case 4:
                 break;
@@ -147,5 +149,94 @@ class Program
                 GerenciadorTarefas();
                 break;
         }
+    }
+
+    static void MarcarProdutos() {
+        Console.Clear();
+
+        if(listaPendentes.Count == 0) {
+            Console.WriteLine("Lista está vazia, necessário haver produtos cadastrados.");
+            Console.WriteLine(" ");
+            Console.WriteLine("Você será redirecionado ao Home. Cadastre um produto.");
+            Thread.Sleep(2300);
+            GerenciadorTarefas();
+            return;
+        }
+
+        while(true) {
+            Console.Write("Informe a quantidade de produtos comprados: ");
+            string entrada = Console.ReadLine();
+
+            if(!int.TryParse(entrada, out int qntProdutos)) {
+                Console.Clear();
+                Console.WriteLine("Entrada inválida. Tente novamente.");
+                Thread.Sleep(1200);
+                continue;
+            }
+
+            Console.WriteLine(" ");
+
+            while(qntProdutos>0) {
+                Console.Write("Informe o ID do produto comprado: ");
+                string entrada2 = Console.ReadLine();
+
+                if(!int.TryParse(entrada2, out int idProduto)) {
+                    Console.Clear();
+                    Console.WriteLine("Entrada inválida. Tente novamente.");
+                    Thread.Sleep(1200);
+                    continue;
+                }
+                
+                var produto = listaPendentes.Find(p => p.Item1 == idProduto);
+                if(produto != null) {
+                    listaComprasFeitas.Add(produto);
+                    listaPendentes.Remove(produto);
+                    Console.WriteLine("Produto marcado como comprado com sucesso!");
+                    qntProdutos--;
+                }
+                else {
+                    Console.WriteLine("Produto não encontrado ou não cadastrado");
+                    Thread.Sleep(1000);
+                    Console.WriteLine(" ");
+                    Console.WriteLine("O que você deseja fazer?");
+                    Console.WriteLine("[1] -- Tentar novamente");
+                    Console.WriteLine("[2] -- Voltar ao Home");
+                    string entrada3 = Console.ReadLine();
+
+                    if(!int.TryParse(entrada3, out int escolhaUser)) {
+                        Console.WriteLine(" ");
+                        Console.WriteLine("Entrada inválida. Tente novamente.");
+                        Thread.Sleep(1200);
+                        goto RetornarHome;
+                    }
+
+                    switch (escolhaUser) {
+                        case 1:
+                            break;
+                        case 2:
+                            goto RetornarHome;
+                        default:
+                            Console.WriteLine("Entrada inválida. Você será redirecionado ao Home");
+                            Thread.Sleep(1200);
+                            goto RetornarHome;
+                    }
+                }
+
+            }
+
+            Console.Clear();
+            Console.WriteLine("Produto marcado como comprado com sucesso!");
+            Thread.Sleep(1200);
+            GerenciadorTarefas();
+            return;
+
+            RetornarHome:
+                Console.Clear();
+                Console.WriteLine("Retornando ao Home...");
+                Thread.Sleep(1200);
+                GerenciadorTarefas();
+                return;
+        }
+
     }
 }
