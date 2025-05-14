@@ -47,6 +47,7 @@ class Program
                 ListarComprados();
                 break;
             case 5:
+                AtualizarLista();
                 break;
             case 6:
                 break;
@@ -297,8 +298,49 @@ class Program
                 break;
         }
     }
+    
+    static void AtualizarLista() {
+        Console.Clear();
+        
+        if (listaPendentes.Count == 0)
+        {
+            Console.WriteLine("Lista está vazia, necessário haver produtos cadastrados.");
+            Console.WriteLine(" ");
+            Console.WriteLine("Você será redirecionado ao Home. Cadastre um produto.");
+            Thread.Sleep(2300);
+            GerenciadorTarefas();
+            return;
+        }
 
-    static void EncerrarPrograma() {
+        Console.Write("Informe o ID do produto que deseja atualizar: ");
+        string entrada = Console.ReadLine();
+        if(!int.TryParse(entrada, out int idProduto)) {
+            Console.Clear();
+            Console.WriteLine("Entrada inválida. Tente novamente informando um ID válido.");
+            Thread.Sleep(1200);
+            AtualizarLista();
+            return;
+        }
+
+        int index = listaPendentes.FindIndex(t => t.Item1 == idProduto);
+        if(index == -1) {
+            Console.WriteLine("Produto não encontrado. Tente novamente.");
+            Thread.Sleep(1200);
+            AtualizarLista();
+            return;
+        }
+
+        Console.Write($"Agora escreva o que você deseja atualiza no produto {idProduto}: ");
+        string produtoAtualizado = Console.ReadLine();
+
+        listaPendentes[index] = Tuple.Create(idProduto, produtoAtualizado);
+        Console.WriteLine("Produto atualizado com sucesso!");
+        Thread.Sleep(1200);
+        GerenciadorTarefas();
+    }
+
+    static void EncerrarPrograma()
+    {
         Console.Clear();
         Console.WriteLine("Programa encerrado. Até logo...👋");
     }
