@@ -50,6 +50,7 @@ class Program
                 AtualizarLista();
                 break;
             case 6:
+                DeletarLista();
                 break;
             case 7:
                 EncerrarPrograma();
@@ -335,6 +336,41 @@ class Program
 
         listaPendentes[index] = Tuple.Create(idProduto, produtoAtualizado);
         Console.WriteLine("Produto atualizado com sucesso!");
+        Thread.Sleep(1200);
+        GerenciadorTarefas();
+    }
+
+    static void DeletarLista() {
+        Console.Clear();
+        if(listaPendentes.Count == 0) {
+            Console.WriteLine("Lista está vazia, necessário haver produtos cadastrados.");
+            Console.WriteLine(" ");
+            Console.WriteLine("Você será redirecionado ao Home. Cadastre um produto");
+            Thread.Sleep(2300);
+            GerenciadorTarefas();
+            return;
+        }
+
+        Console.Write("Informe o ID do produto que deseja remover da lista: ");
+        string entrada = Console.ReadLine();
+        if(!int.TryParse(entrada, out int idProduto)) {
+            Console.Clear();
+            Console.WriteLine("Entrada inválida. Tente novamente informando um ID válido.");
+            Thread.Sleep(1200);
+            DeletarLista();
+            return;
+        }
+
+        var produtoParaRemover = listaPendentes.FirstOrDefault(t => t.Item1 == idProduto);
+        if(produtoParaRemover == default) {
+            Console.WriteLine("Produto não encontrado. Tente novamente.");
+            Thread.Sleep(1200);
+            DeletarLista();
+            return;
+        }
+
+        listaPendentes.Remove(produtoParaRemover);
+        Console.WriteLine("Produto removido com sucesso!");
         Thread.Sleep(1200);
         GerenciadorTarefas();
     }
