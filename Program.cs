@@ -1,6 +1,7 @@
 ﻿using System;
 class Program
 {
+    static List<Tuple<int, string>> listaPendentes = new List<Tuple<int, string>>();
     static void Main(string[] args) {
         GerenciadorTarefas();
     }
@@ -33,6 +34,7 @@ class Program
             case 1:
                 break;
             case 2:
+                ListarPendentes();
                 break;
             case 3:
                 break;
@@ -45,6 +47,56 @@ class Program
             case 7:
                 break;
             default:
+                break;
+        }
+    }
+
+    static void ListarPendentes() {
+        Console.Clear();
+
+        if(listaPendentes.Count == 0) {
+            Console.WriteLine("Lista está vazia, necessário haver produtos cadastrados.");
+            Console.WriteLine(" ");
+            Console.WriteLine("Você será redirecionado ao Home. Cadastre um produto.");
+            Thread.Sleep(3000);
+            GerenciadorTarefas();
+            return;
+        }
+
+        Console.WriteLine("Iniciando listagem de produto pendentes...");
+        Thread.Sleep(1200);
+        Console.WriteLine(" ");
+
+        foreach ((int numProduto, string produto ) in listaPendentes)
+        {
+            Console.WriteLine($"{numProduto} {produto}");
+        }
+
+        Thread.Sleep(1200);
+        Console.WriteLine(" ");
+        Console.WriteLine("O que você deseja fazer? ");
+        Console.WriteLine("[1] -- Voltar ao Home");
+        Console.WriteLine("[2] -- Encerrar programa");
+        string entrada = Console.ReadLine();
+
+        if(!int.TryParse(entrada, out int opcao)) {
+            Console.WriteLine("Entrada inválida. Você será redirecionado ao Home");
+            Thread.Sleep(1200);
+            GerenciadorTarefas();
+            return;
+        }
+
+        switch (opcao) {
+            case 1:
+                GerenciadorTarefas();
+                break;
+            case 2:
+                // Função de encerrar o programa
+                break;
+            default:
+                Console.WriteLine("Entrada inválida. Você será redirecionado ao Home");
+                Thread.Sleep(1200);
+                GerenciadorTarefas();
                 break;
         }
     }
